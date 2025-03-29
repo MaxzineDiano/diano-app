@@ -11,8 +11,12 @@ use App\Services\TaskService;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome', ['name' => 'diano-app']);
 });
+
+Route::get('/users',[UserController::class, 'index']);
+
+Route::resource('/products', ProductController::class);
 
 Route::get('/test-container', function (Request $request) {
     $input = $request->input('key');
@@ -70,9 +74,11 @@ Route::post('/token', function(Request $request) {
     return $request->all();
 });
 
-Route::get('/users',[UserController::class, 'index'])->middleware('user-middleware');
+// //controller -> middleware
+// Route::get('/users', [UserController::class, 'index'])->middleware('user-middleware');
 
-Route::resource('products', ProductController::class);
+// // Resource
+// Route::resource('products', ProductController::class);
 
 Route::get('/product-list', function (ProductService $productService) {
     $data['products'] = $productService->listProducts();
